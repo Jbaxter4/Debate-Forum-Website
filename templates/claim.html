@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+	<title>Claim - {{ header }}</title>
+	<div class="claim">
+		<h1 class="claimHeader">{{ header }}</h1>
+		<p>Claim created by {{ poster }} on {{ time }}</p>
+		{% for relation in relations | reverse %}
+		<div class="relation">
+			<p><a href="{{ url_for('claim', claimID=relation[0]) }}">A claim that is {{ relation[3] }}: {{ relation[1] }}</a></p>
+		</div>
+		{% endfor %}
+		<div class="newReplyBtn" style="display:none;">
+			<button type="button" onclick="addReplyC()">Reply to this claim</button>
+		</div>
+		<div id="newReplyPanelC" class="modal">
+			<div class="newReplyContent">
+				<form id="newReplyToClaim">
+					<label>Enter your reply (Maximum 200 characters):</label><br>
+					<input type="text" id="replyCText" size="50" maxlength="200"><br>
+					<label>Relation to claim:</label><br>
+					<select id="claimRelation" size="1">
+					<option value="clarification">Clarification</option>
+					<option value="supporting">Supporting Argument</option>
+					<option value="counter">Counterargument</option>
+					</select><br>
+					<input type="submit" value="Submit">
+				</form>
+				<div id="errorReply" style="display:none;"></div>
+			</div>
+		</div>
+	</div>
+	<div id="replys">
+		{% for reply in replys | reverse %}
+		<div class="reply">
+			<p>{{ reply[0] }}: {{ reply[1] }}</p>
+			<p>Reply by {{ reply[2] }} on {{ reply[3] }}</p>
+			{% if reply[5] != None %}
+				<p>in {{ reply[7] }} to comment {{ reply[5] }}</p>
+			{% else %}
+				<p>as a {{ reply[6] }} to the claim</p>
+			{% endif %}
+			<div class="newReplyBtn" style="display:none;">
+				<button type="button" onclick="addReplyR()">Reply to this message</button>
+			</div>
+			<div id="newReplyPanelR" class="modal">
+				<div class="newReplyContent">
+					<form id="newReplyToReply">
+						<label for="newReply">Enter your reply (Maximum 200 characters):</label><br>
+						<input type="text" id="replyRText" size="50" maxlength="200"><br>
+						<label>Relation to reply:</label><br>
+						<select id="replyRelation" size="1">
+						<option value="evidence">Evidence</option>
+						<option value="support">Support</option>
+						<option value="rebuttal">Rebuttal</option>
+						</select><br>
+						<label id="pReplyID" style="display:none;">{{ reply[0] }}</label>
+						<input type="submit" value="Submit">
+					</form>
+					<div id="errorReply" style="display:none;"></div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+	<title>Home Page</title>
+	<h1>Debate Forum</h1>
+	<div class="newTopicBtn" style="display:none;">
+		<button type="button" onclick="addTopic()">Add New Topic</button>
+	</div>
+	<div id="newTopicPanel" class="modal">
+		<div class="newTopicContent">
+			<form id="newTopic">
+				<label>Topic Name:</label><br>
+				<input type="text" id="topicName" maxlength="30" required><br>
+				<input type="submit" value="Submit">
+			</form>
+			<div id="errorTopic" style="display:none;"></div>
+		</div>
+	</div>
+	<div id="topics">
+		{% for topic in topics %}
+			<div class="topic">
+				<h2><a href="{{ url_for('topic', topicName=topic[1]) }}">{{ topic[1] }}</a></h2>
+				<p>By {{ topic[2] }} on {{ topic[3] }}</p>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock content %}

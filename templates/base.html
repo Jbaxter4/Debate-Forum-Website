@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+	<script type="text/javascript" src="/static/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="/static/main.js"></script>
+	</head>
+	<body onload="checkLogged()">
+		<div id="check" style="display:none;"></div>
+		<div class="topnav">
+			<a class="active" href="/home">Home</a>
+			<a class="active" href="/search">Search</a>
+			<div class="loginBtns">
+				<button type="button" onclick="login()">Login</button>
+				<button type="button" onclick="register()">Register</button>
+			</div>
+			<div class="logoutBtns" style="display:none;">
+				<p style="display:inline-block;">You are logged in</p>
+				<button style="display:inline-block;" type="button" onclick="logout()">Logout</button>
+			</div>
+		</div>
+		<div id="loginPanel" class="modal">
+			<div class="loginContent">
+				<form id="login">
+					<p>Login</p>
+					<label>Username:</label><br>
+					<input type="text" id="loginName" maxlength="20" required><br>
+					<label>Password (8 characters minimum):</label><br>
+					<input type="password" minlength="8" id="loginPass" maxlength="20" required><br><br>
+					<input type="submit" value="Submit">
+				</form>
+				<div id="errorLogin" style="display:none;"></div>
+			</div>
+		</div>
+		<div id="registerPanel" class="modal">
+			<div class="registerContent">
+				<form id="register">
+					<p>Register</p>
+					<label>Username:</label><br>
+					<input type="text" id="registerUser" maxlength="20" required><br>
+					<label>Password (8 characters minimum):</label><br>
+					<input type="password" minlength="8" id="registerPass" maxlength="20" required><br><br>
+					<input type="submit" value="Submit">
+				</form>
+				<div id="errorReg" style="display:none;"></div>
+			</div>
+		</div>
+		<div id="searchPanel" class="modal">
+			<div class="searchContent">
+				<form id="search">
+					<input type="radio" value="content" name="search">
+					<label>Search by content:</label><br>
+					<input type="text" id="content" maxlength="20"><br>
+					<input type="radio" value="author" name="search">
+					<label>Search by author:</label><br>
+					<input type="text" id="author" maxlength="20"><br>
+					<input type="radio" value="date" name="search">
+					<label>Search by date:</label><br>
+					<input type="date" id="date"><br>
+					<input type="submit" value="Submit">
+				</form>
+				<div id="errorSearch" style="display:none;"></div>
+			</div>
+		</div>
+		{% block content %}{% endblock %}
+	</body>
+</html>

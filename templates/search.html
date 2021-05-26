@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+	<title>Search Page</title>
+	<div id="search">
+		<form action="{{ url_for('search') }}" method="post">
+			<label>Enter your search phrase:</label><br>
+			<input type="text" name="data" required></br>
+			<label>Search by contains or author:</label><br>
+			<select name="searchMethod" size="1">
+			<option value="contains">Contains</option>
+			<option value="author">Author</option>
+			</select><br>
+			<input type="submit" value="Search">
+		</form>
+	</div>
+	<div id="searchResults">
+		<h1 id="searchTitle">Search results</h1>
+		<div id="topics">
+			{% for topic in topics %}
+				<div class="topic">
+					<h2>Topic</h2>
+					<h2><a href="{{ url_for('topic', topicName=topic[1]) }}">{{ topic[1] }}</a></h2>
+					<p>By {{ topic[2] }} on {{ topic[3] }}</p>
+				</div>
+			{% endfor %}
+		</div>
+		<div id="claims">
+			{% for claim in claims | reverse %}
+			<div class="claim">
+				<h2>Claim</h2>
+				<h2><a href="{{ url_for('claim', claimID=claim[0]) }}">{{ claim[1] }}</a></h2>
+				<p>Claimed by {{ claim[2] }} on {{ claim[3] }}</p>
+			</div>
+			{% endfor %}
+		</div>
+		<div id="replys">
+			{% for reply in replys | reverse %}
+			<div class="reply">
+				<h2>Reply</h2>
+				<p>{{ reply[0] }}: {{ reply[1] }}</p>
+				<p>Reply by {{ reply[2] }} on {{ reply[3] }}</p>
+				{% if reply[5] != None %}
+					<p>in {{ reply[7] }} to comment {{ reply[5] }}</p>
+				{% else %}
+					<p>as a {{ reply[6] }} to the claim</p>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock content %}

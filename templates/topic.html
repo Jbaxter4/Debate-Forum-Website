@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+	<title>Topic - {{ name }}</title>
+	<div class="topic">
+		<h1 class="topicName">{{ name }}</h1>
+		<p>Topic created by {{ poster }} on {{ time }}</p>
+		<div class="newClaimBtn" style="display:none;">
+			<button type="button" onclick="addClaim()">Add New Claim</button>
+		</div>
+		<div id="newClaimPanel" class="modal">
+			<div class="newClaimContent">
+				<form id="newClaim">
+					<label>Claim Header:</label><br>
+					<input type="text" id="claimHeader" size="50" maxlength="50"><br>
+					<div id="checkboxes">
+						<label>Related to:</label><br>
+						{% for claim in claims %}
+						<input type="checkbox" id="related">
+						<label for="related">{{ claim[1] }}</label>
+						<select id="oppEqu" size="1">
+						<option value="opposed">Opposed</option>
+						<option value="equivalent">Equivalent</option>
+						</select><br>
+						{% endfor %}
+					</div>
+					<input type="submit" value="Submit">
+				</form>
+				<div id="errorClaim" style="display:none;"></div>
+			</div>
+		</div>
+	</div>
+	<div id="claims">
+		{% for claim in claims | reverse %}
+		<div class="claim">
+			<h2><a href="{{ url_for('claim', claimID=claim[0]) }}">{{ claim[1] }}</a></h2>
+			<p>Claimed by {{ claim[2] }} on {{ claim[3] }}</p>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock content %}
